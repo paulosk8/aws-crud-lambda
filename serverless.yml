@@ -1,0 +1,36 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: paulosk8
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: aws-crud-lambda
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:*
+      Resource: 
+      - arn:aws:dynamodb:us-east-1:515966530478:table/TareasTable
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+resources: # CloudFormation template syntax
+  Resources:
+    TareasTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TareasTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
