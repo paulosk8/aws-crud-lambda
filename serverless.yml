@@ -15,11 +15,41 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/handler.hello
     events:
       - httpApi:
           path: /
           method: get
+  crearTarea:
+    handler: src/addTarea.addTarea
+    events:
+      - httpApi:
+          path: /tareas
+          method: post
+  getTareas:
+    handler: src/getTareas.getTareas
+    events:
+      - httpApi:
+          path: /tareas
+          method: get
+  getTarea:
+    handler: src/getTarea.getTarea
+    events:
+      - httpApi:
+          path: /tareas/{id}
+          method: get
+  updateTarea:
+    handler: src/updateTarea.updateTarea
+    events:
+      - httpApi:
+          path: /tareas/{id}
+          method: put
+  deleteTarea:
+    handler: src/deleteTarea.deleteTarea
+    events:
+      - httpApi:
+          path: /tareas/{id}
+          method: delete
 
 resources: # CloudFormation template syntax
   Resources:
